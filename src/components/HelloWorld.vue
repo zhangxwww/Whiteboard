@@ -89,14 +89,25 @@
     <context-menu-item :disabled="true">属性</context-menu-item>
   </context-menu>
 
+  <div v-drag
+       id="drag"
+       style="position:absolute; top:100px; left:100px">
+    <p>打印</p>
+  </div>
 </template>
 
 <script>
+// import VueDraggableResizable from 'vue-draggable-resizable/src/components/vue-draggable-resizable.vue'
+// import "vue-draggable-resizable/dist/VueDraggableResizable.css"
 
 export default {
   name: 'HelloWorld',
   props: {
     msg: String
+  },
+  components: {
+    // eslint-disable-next-line vue/no-unused-components
+    // VueDraggableResizable
   },
   data () {
     return {
@@ -109,7 +120,10 @@ export default {
       click_pos: {
         top: "0px",
         left: "0px"
-      }
+      },
+      list: [
+        { x: '15px', y: '15px', name: '1', width: '100px', height: '100px' },
+      ]
     }
   },
   methods: {
@@ -125,11 +139,54 @@ export default {
       this.click_pos.left = this.$refs.context.contextmenu.style.left
       //   console.log(this.$refs['context-menu'].style.top, this.$refs['context-menu'].style.left)
     },
+    onResize: function (x, y, width, height) {
+      console.log(x, y, width, height)
+      this.list[0].x = x
+      this.list[0].y = y
+      this.list[0].width = width
+      this.list[0].height = height
+    },
+    onDrag: function (x, y) {
+      console.log(x, y)
+      this.list[0].x = x
+      this.list[0].y = y
+    },
   },
   mounted () {
     const formLabelAlign = localStorage.getItem('formLabelAlign')
     if (formLabelAlign) {
       this.formLabelAlign = JSON.parse(formLabelAlign)
+    }
+  },
+  directives: {
+    drag: {
+      //   update: function () {
+      //     console.log('update')
+      //   },
+      // 指令的定义
+      mounted: function (el) {
+        let oDiv = el;  // 获取当前元素
+        console.log(el)
+        oDiv.onmousedown = (e) => {
+          console.log('onmousedown')
+          // 算出鼠标相对元素的位置
+          let disX = e.clientX - oDiv.offsetLeft;
+          let disY = e.clientY - oDiv.offsetTop;
+          document.onmousemove = (e) => {
+            // 用鼠标的位置减去鼠标相对元素的位置，得到元素的位置
+            let left = e.clientX - disX;
+            let top = e.clientY - disY;
+            oDiv.style.left = left + 'px';
+            oDiv.style.top = top + 'px';
+          };
+
+          // eslint-disable-next-line no-unused-vars
+          document.onmouseup = (e) => {
+            document.onmousemove = null;
+            document.onmouseup = null;
+          }
+        }
+      }
     }
   },
 }
