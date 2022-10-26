@@ -94,11 +94,23 @@
        style="position:absolute; top:100px; left:100px">
     <p>打印</p>
   </div>
+
+  <div style="width:600px"
+       @click=onClick>
+    <v-md-editor ref='editor'
+                 v-model="text"
+                 height="auto"
+                 left-toolbar="undo redo clear | h bold italic strikethrough quote | ul ol table hr | link code"
+                 right-toolbar="preview"
+                 :autofocus=true
+                 :mode=mode
+                 @blur=onBlur></v-md-editor>
+  </div>
+
 </template>
 
+
 <script>
-// import VueDraggableResizable from 'vue-draggable-resizable/src/components/vue-draggable-resizable.vue'
-// import "vue-draggable-resizable/dist/VueDraggableResizable.css"
 
 export default {
   name: 'HelloWorld',
@@ -123,7 +135,9 @@ export default {
       },
       list: [
         { x: '15px', y: '15px', name: '1', width: '100px', height: '100px' },
-      ]
+      ],
+      text: '',
+      mode: 'editable',
     }
   },
   methods: {
@@ -137,7 +151,6 @@ export default {
 
       this.click_pos.top = this.$refs.context.contextmenu.style.top
       this.click_pos.left = this.$refs.context.contextmenu.style.left
-      //   console.log(this.$refs['context-menu'].style.top, this.$refs['context-menu'].style.left)
     },
     onResize: function (x, y, width, height) {
       console.log(x, y, width, height)
@@ -151,42 +164,24 @@ export default {
       this.list[0].x = x
       this.list[0].y = y
     },
+    onBlur: function (e) {
+      console.log('onblur')
+      console.log(e)
+      this.mode = 'preview'
+    },
+    onClick: function () {
+      console.log('click')
+      this.mode = 'editable'
+      console.log(this.$refs.editor)
+      this.$nextTick(() => {
+        this.$refs.editor.focus()
+      })
+    }
   },
   mounted () {
     const formLabelAlign = localStorage.getItem('formLabelAlign')
     if (formLabelAlign) {
       this.formLabelAlign = JSON.parse(formLabelAlign)
-    }
-  },
-  directives: {
-    drag: {
-      //   update: function () {
-      //     console.log('update')
-      //   },
-      // 指令的定义
-      mounted: function (el) {
-        let oDiv = el;  // 获取当前元素
-        console.log(el)
-        oDiv.onmousedown = (e) => {
-          console.log('onmousedown')
-          // 算出鼠标相对元素的位置
-          let disX = e.clientX - oDiv.offsetLeft;
-          let disY = e.clientY - oDiv.offsetTop;
-          document.onmousemove = (e) => {
-            // 用鼠标的位置减去鼠标相对元素的位置，得到元素的位置
-            let left = e.clientX - disX;
-            let top = e.clientY - disY;
-            oDiv.style.left = left + 'px';
-            oDiv.style.top = top + 'px';
-          };
-
-          // eslint-disable-next-line no-unused-vars
-          document.onmouseup = (e) => {
-            document.onmousemove = null;
-            document.onmouseup = null;
-          }
-        }
-      }
     }
   },
 }
