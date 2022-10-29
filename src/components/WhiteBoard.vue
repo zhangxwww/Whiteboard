@@ -39,15 +39,17 @@ export default {
     this.position = this.initPosition
   },
   methods: {
-    onBlur: function (e) {
-      console.log('onblur')
-      console.log(e)
+    onBlur: function () {
       this.mode = 'preview'
+      const re = /^\s*?$/
+      if (re.test(this.text)) {
+        this.$emit('delete', this.id)
+      } else {
+        this.$emit('edit', this.id, this.text)
+      }
     },
     onClick: function () {
-      console.log('click')
       this.mode = 'editable'
-      console.log(this.$refs.editor)
       this.$nextTick(() => {
         this.$refs.editor.focus()
       })

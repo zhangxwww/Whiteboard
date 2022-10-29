@@ -5,7 +5,9 @@
        style="position:absolute; width=600px">
     <white-board :id=idx
                  :initPosition="item.position"
-                 :initText="item.data.text"></white-board>
+                 :initText="item.data.text"
+                 @delete="onWhiteBoardDelete"
+                 @edit="onWhiteBoardEdit"></white-board>
   </div>
 </template>
 
@@ -36,6 +38,13 @@ export default {
     // eslint-disable-next-line no-unused-vars
     delete (type, id) { },
 
+    onWhiteBoardDelete (id) {
+      this.items.whiteboards.splice(id, 1)
+    },
+    onWhiteBoardEdit (id, text) {
+      this.items.whiteboards[id].data.text = text
+      // save
+    }
   },
   mounted () {
     this.items.whiteboards.push(...this.$store.state.items.whiteboards)
