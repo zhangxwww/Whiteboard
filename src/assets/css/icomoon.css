@@ -1,0 +1,45 @@
+@font-face {
+    font-family: 'icomoon';
+    src:  url('../fonts/icomoon.eot?qxxs9c');
+    src:  url('../fonts/icomoon.eot?qxxs9c#iefix') format('embedded-opentype'),
+      url('../fonts/icomoon.ttf?qxxs9c') format('truetype'),
+      url('../fonts/icomoon.woff?qxxs9c') format('woff'),
+      url('../fonts/icomoon.svg?qxxs9c#icomoon') format('svg');
+    font-weight: normal;
+    font-style: normal;
+    font-display: block;
+  }
+
+  [class^="icon-"], [class*=" icon-"] {
+    /* use !important to prevent issues with browser extensions that change fonts */
+    font-family: 'icomoon' !important;
+    speak: never;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  .icon-database:before {
+    content: "\e964";
+  }
+  .icon-checkbox-checked:before {
+    content: "\ea52";
+  }
+  .icon-paragraph-left:before {
+    content: "\ea77";
+  }
+  .icon-paragraph-center:before {
+    content: "\ea78";
+  }
+  .icon-paragraph-right:before {
+    content: "\ea79";
+  }
+  .icon-bin:before {
+    content: "\e9ac";
+  }
