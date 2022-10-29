@@ -8,7 +8,6 @@
                  right-toolbar="preview"
                  :autofocus=true
                  :mode=mode
-                 :class="select"
                  @blur="onBlur"></v-md-editor>
   </div>
 </template>
@@ -39,6 +38,7 @@ export default {
     this.$refs.editor.$el.childNodes[1].childNodes[1].childNodes[0].onmousedown = (e) => {
       e.stopPropagation()
     }
+    this.$refs.editor.$el.childNodes[1].childNodes[1].childNodes[1].style.userSelect = 'none'
   },
   methods: {
     onBlur: function () {
@@ -59,6 +59,7 @@ export default {
   },
   computed: {
     select: function () {
+      console.log('select')
       return this.mode === 'editable' ? 'can-select' : 'no-select'
     }
   }
@@ -66,16 +67,4 @@ export default {
 </script>
 
 <style>
-.can-select {
-  -webkit-user-select: text;
-  -moz-user-select: text;
-  -ms-user-select: text;
-  user-select: text;
-}
-.no-select {
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-}
 </style>
