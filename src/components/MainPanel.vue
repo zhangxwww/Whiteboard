@@ -1,28 +1,28 @@
 <template>
-  <div v-for="(item, idx) in items.whiteboards"
+  <div v-for="(item, idx) in items.writeboards"
        :key=idx
        v-drag
-       style="position:absolute; width=600px">
-    <white-board :id=idx
+       class="writeboard">
+    <write-board :id=idx
                  :initPosition="item.position"
                  :initText="item.data.text"
-                 @delete="onWhiteBoardDelete"
-                 @edit="onWhiteBoardEdit"></white-board>
+                 @delete="onWriteBoardDelete"
+                 @edit="onWriteBoardEdit"></write-board>
   </div>
 </template>
 
 <script>
-import WhiteBoard from './WhiteBoard.vue'
+import WriteBoard from './WriteBoard.vue'
 
 export default {
   name: 'MainPanel',
   components: {
-    WhiteBoard
+    WriteBoard
   },
   data () {
     return {
       items: {
-        whiteboards: [],    // { position: { x: ..., y: ... }, data: { text: ... } }
+        writeboards: [],    // { position: { x: ..., y: ... }, data: { text: ... } }
         deadlines: [],   // { position: { x: ..., y: ... }, data: { time: ..., description: ...} }
         times: [],  // { position: { x: ..., y: ... }, data: { } }
       }
@@ -33,21 +33,24 @@ export default {
     load () { },
     // eslint-disable-next-line no-unused-vars
     add (type, position) { },
-    // eslint-disable-next-line no-unused-vars
-    edit (type, id, data) { },
-    // eslint-disable-next-line no-unused-vars
-    delete (type, id) { },
 
-    onWhiteBoardDelete (id) {
-      this.items.whiteboards.splice(id, 1)
+    onWriteBoardDelete (id) {
+      this.items.writeboards.splice(id, 1)
     },
-    onWhiteBoardEdit (id, text) {
-      this.items.whiteboards[id].data.text = text
+    onWriteBoardEdit (id, text) {
+      this.items.writeboards[id].data.text = text
       // save
     }
   },
   mounted () {
-    this.items.whiteboards.push(...this.$store.state.items.whiteboards)
+    this.items.writeboards.push(...this.$store.state.items.writeboards)
   }
 }
 </script>
+
+<style>
+.writeboard {
+  position: absolute;
+  width: 600px;
+}
+</style>

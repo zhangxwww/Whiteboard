@@ -84,4 +84,12 @@ createApp(App)
             }
         }
     })
+    .directive('no-drag', {
+        mounted: function (el) {
+            el.onmousedown = (e) => {
+                e.stopPropagation()
+            }
+            console.log(el)
+        }
+    })
     .mount('#app')

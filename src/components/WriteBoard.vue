@@ -1,6 +1,5 @@
 <template>
-  <div style="position:absolute; width:600px"
-       :style="{top: position.y, left: position.x}"
+  <div :style="{top: position.y, left: position.x}"
        @click="onClick">
     <v-md-editor ref="editor"
                  v-model="text"
@@ -9,6 +8,7 @@
                  right-toolbar="preview"
                  :autofocus=true
                  :mode=mode
+                 :class="select"
                  @blur="onBlur"></v-md-editor>
   </div>
 </template>
@@ -34,9 +34,11 @@ export default {
     initPosition: Object
   },
   mounted () {
-    // const content = this.$store.state.items.whiteboards[this.id]
     this.text = this.initText
     this.position = this.initPosition
+    this.$refs.editor.$el.childNodes[1].childNodes[1].childNodes[0].onmousedown = (e) => {
+      e.stopPropagation()
+    }
   },
   methods: {
     onBlur: function () {
@@ -54,6 +56,26 @@ export default {
         this.$refs.editor.focus()
       })
     }
+  },
+  computed: {
+    select: function () {
+      return this.mode === 'editable' ? 'can-select' : 'no-select'
+    }
   }
 }
 </script>
+
+<style>
+.can-select {
+  -webkit-user-select: text;
+  -moz-user-select: text;
+  -ms-user-select: text;
+  user-select: text;
+}
+.no-select {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+</style>
