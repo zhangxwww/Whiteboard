@@ -69,8 +69,7 @@
       </el-form-item>
     </el-form>
     <el-button @click="save"
-               style="position: fixed"
-               :style="{position: 'fixed', top: click_pos.top, left: click_pos.left}">Default</el-button>
+               :style="{position: 'absolute', top: click_pos.top, left: click_pos.left}">Default</el-button>
   </div>
 
   <context-menu name="context-menu-1"
@@ -90,8 +89,8 @@
   </context-menu>
 
   <div v-drag
-       id="drag"
-       style="position:absolute; top:100px; left:100px">
+       id="resize"
+       style="position:absolute; top:200px; left:200px">
     <p>打印</p>
   </div>
 
@@ -144,20 +143,14 @@ export default {
     save () {
       localStorage.setItem('formLabelAlign', JSON.stringify(this.formLabelAlign))
     },
-    itemClickEvent (item) {
+    itemClickEvent (item, e) {
+      console.log(e)
       console.log(item.name)
       console.log(item.id)
       console.log(this.$refs.context.contextmenu.style.top)
 
       this.click_pos.top = this.$refs.context.contextmenu.style.top
       this.click_pos.left = this.$refs.context.contextmenu.style.left
-    },
-    onResize: function (x, y, width, height) {
-      console.log(x, y, width, height)
-      this.list[0].x = x
-      this.list[0].y = y
-      this.list[0].width = width
-      this.list[0].height = height
     },
     onDrag: function (x, y) {
       console.log(x, y)

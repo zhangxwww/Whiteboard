@@ -14,7 +14,8 @@
         "vue": "^3.0.0",
         "vue-draggable-resizable": "^2.3.0",
         "vue-runtime-helpers": "^1.1.2",
-        "vue3-contextmenu": "^0.2.12"
+        "vue3-contextmenu": "^0.2.12",
+        "vuex": "^4.1.0"
     },
     "devDependencies": {
         "@vue/cli-plugin-babel": "~4.5.11",

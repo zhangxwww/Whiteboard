@@ -1,6 +1,8 @@
 import { createApp } from 'vue'
 import App from './App.vue'
 
+import store from './store'
+
 
 import ElementPlus from 'element-plus'
 import 'element-plus/theme-chalk/index.css'
@@ -53,6 +55,7 @@ VueMarkdownEditor
 
 
 createApp(App)
+    .use(store)
     .use(ElementPlus, { locale })
     .use(contextmenu)
     .use(VueMarkdownEditor)
