@@ -100,7 +100,7 @@
     <v-md-editor ref='editor'
                  v-model="text"
                  height="auto"
-                 left-toolbar="undo redo clear | h bold italic strikethrough quote | ul ol table hr | link code"
+                 left-toolbar="undo redo clear | strikethrough quote | table | link"
                  right-toolbar="preview"
                  :autofocus=true
                  :mode=mode
